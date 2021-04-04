@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uts_membercafe/entrycard.dart';
 import 'dart:async';
 import 'sqlite/dbhelper.dart';
 import 'entryprofile.dart';
 import 'sqlite/item.dart';
 import 'sqlite/itemcard.dart';
-import 'entryprofile.dart';
+import 'listcard.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -58,14 +59,29 @@ class HomeState extends State<Home> {
             child: RaisedButton(
               child: Text("Tambah Card Member"),
               onPressed: () async {
-                var item = await navigateToEntryForm(context, null);
-                if (item != null) {
+                var itemcard = await navigateToEntryCard(context, null);
+                if (itemcard != null) {
                   //TODO 2 Panggil Fungsi untuk Insert ke DB
-                  int result = await dbHelper.insert(item);
+                  int result = await dbHelper.insertcard(itemcard);
                   if (result > 0) {
                     updateListView();
                   }
                 }
+              },
+            ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            width: double.infinity,
+            child: RaisedButton(
+              child: Text("Lihat Card Member"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListCard()),
+                );
               },
             ),
           ),
@@ -84,10 +100,10 @@ class HomeState extends State<Home> {
   }
 
   Future<ItemCard> navigateToEntryCard(
-      BuildContext context, ItemCard item) async {
+      BuildContext context, ItemCard itemcard) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
-      return EntryForm(item);
+      return EntryFormCard(itemcard);
     }));
     return result;
   }
@@ -137,7 +153,6 @@ class HomeState extends State<Home> {
     dbFuture.then((database) {
 //TODO 1 Select data dari DB
       Future<List<ItemProfile>> itemListFuture = dbHelper.getItemList();
-      Future<List<ItemCard>> itemListFuture1 = dbHelper.getItemListcard();
       itemListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;

@@ -21,7 +21,8 @@ class DbHelper {
 
   //buat tabel baru dengan nama item
   void _createDb(Database db, int version) async {
-    await db.execute('''
+    Batch batch = db.batch();
+    batch.execute('''
       CREATE TABLE itemprofile (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
@@ -30,11 +31,12 @@ class DbHelper {
       address TEXT
       )
     ''');
-    await db.execute('''CREATE TABLE itemcard (
+    batch.execute('''CREATE TABLE itemcard (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       code TEXT
       )''');
+    await batch.commit();
   }
 
 //select databases
@@ -47,7 +49,7 @@ class DbHelper {
   //select databases
   Future<List<Map<String, dynamic>>> selectcard() async {
     Database db = await this.initDb();
-    var mapList = await db.query('itemcard' + 'itemcard', orderBy: 'name');
+    var mapList = await db.query('itemcard', orderBy: 'name');
     return mapList;
   }
 
@@ -106,13 +108,13 @@ class DbHelper {
   }
 
   Future<List<ItemCard>> getItemListcard() async {
-    var itemMapList = await select();
+    var itemMapList = await selectcard();
     int count = itemMapList.length;
-    List<ItemCard> itemList = List<ItemCard>();
+    List<ItemCard> itemListcard = List<ItemCard>();
     for (int i = 0; i < count; i++) {
-      itemList.add(ItemCard.fromMap(itemMapList[i]));
+      itemListcard.add(ItemCard.fromMap(itemMapList[i]));
     }
-    return itemList;
+    return itemListcard;
   }
 
   factory DbHelper() {
@@ -121,6 +123,7 @@ class DbHelper {
     }
     return _dbHelper;
   }
+
   Future<Database> get database async {
     if (_database == null) {
       _database = await initDb();

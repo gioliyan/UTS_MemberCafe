@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'sqlite/itemcard.dart';
 
-class EntryForm extends StatefulWidget {
+class EntryFormCard extends StatefulWidget {
   final ItemCard item;
-  EntryForm(this.item);
+  EntryFormCard(this.item);
   @override
   EntryFormState createState() => EntryFormState(this.item);
 }
 
-class EntryFormState extends State<EntryForm> {
+class EntryFormState extends State<EntryFormCard> {
   ItemCard item;
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
