@@ -17,13 +17,11 @@ class HomeState extends State<Home> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
   List<ItemProfile> itemList;
-  List<ItemCard> itemCard;
   @override
   Widget build(BuildContext context) {
     updateListView();
     if (itemList == null) {
       itemList = List<ItemProfile>();
-      itemCard = List<ItemCard>();
     }
     return Scaffold(
       appBar: AppBar(
@@ -52,40 +50,21 @@ class HomeState extends State<Home> {
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: double.infinity,
-            child: RaisedButton(
-              child: Text("Tambah Card Member"),
-              onPressed: () async {
-                var itemcard = await navigateToEntryCard(context, null);
-                if (itemcard != null) {
-                  //TODO 2 Panggil Fungsi untuk Insert ke DB
-                  int result = await dbHelper.insertcard(itemcard);
-                  if (result > 0) {
-                    updateListView();
-                  }
-                }
-              },
-            ),
-          ),
-        ),
-        Container(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: double.infinity,
-            child: RaisedButton(
-              child: Text("Lihat Card Member"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ListCard()),
-                );
-              },
-            ),
-          ),
-        )
+        // Container(
+        //   alignment: Alignment.bottomCenter,
+        //   child: SizedBox(
+        //     width: double.infinity,
+        //     child: RaisedButton(
+        //       child: Text("Lihat Card Member"),
+        //       onPressed: () {
+        //         Navigator.push(
+        //           context,
+        //           MaterialPageRoute(builder: (context) => ListCard()),
+        //         );
+        //       },
+        //     ),
+        //   ),
+        // )
       ]),
     );
   }

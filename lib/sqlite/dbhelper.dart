@@ -39,35 +39,35 @@ class DbHelper {
     await batch.commit();
   }
 
-//select databases
+  //select databases profile
   Future<List<Map<String, dynamic>>> select() async {
     Database db = await this.initDb();
     var mapList = await db.query('itemprofile', orderBy: 'name');
     return mapList;
   }
 
-  //select databases
-  Future<List<Map<String, dynamic>>> selectcard() async {
+  //select databases login
+  Future<List<Map<String, dynamic>>> selectcard(int id) async {
     Database db = await this.initDb();
-    var mapList = await db.query('itemcard', orderBy: 'name');
+    var mapList = await db.query('itemcard', where: 'id = $id');
     return mapList;
   }
 
-  //create databases
+  //create databases profile
   Future<int> insert(ItemProfile object) async {
     Database db = await this.initDb();
     int count = await db.insert('itemprofile', object.toMap());
     return count;
   }
 
-  //create databases
+  //create databases login
   Future<int> insertcard(ItemCard object) async {
     Database db = await this.initDb();
     int count = await db.insert('itemcard', object.toMap());
     return count;
   }
 
-  //update databases
+  //update databases profile
   Future<int> update(ItemProfile object) async {
     Database db = await this.initDb();
     int count = await db.update('itemprofile', object.toMap(),
@@ -75,7 +75,7 @@ class DbHelper {
     return count;
   }
 
-  //update databases
+  //update databases login
   Future<int> updatecard(ItemCard object) async {
     Database db = await this.initDb();
     int count = await db.update('itemcard', object.toMap(),
@@ -83,20 +83,21 @@ class DbHelper {
     return count;
   }
 
-  //delete databases
+  //delete databases profile
   Future<int> delete(int id) async {
     Database db = await this.initDb();
     int count = await db.delete('itemprofile', where: 'id=?', whereArgs: [id]);
     return count;
   }
 
-  //delete databases
+  //delete databases login
   Future<int> deletecard(int id) async {
     Database db = await this.initDb();
     int count = await db.delete('itemcard', where: 'id=?', whereArgs: [id]);
     return count;
   }
 
+  // listview database profile
   Future<List<ItemProfile>> getItemList() async {
     var itemMapList = await select();
     int count = itemMapList.length;
@@ -107,14 +108,37 @@ class DbHelper {
     return itemList;
   }
 
+  // listview database login
   Future<List<ItemCard>> getItemListcard() async {
-    var itemMapList = await selectcard();
+    var itemMapList = await select();
     int count = itemMapList.length;
     List<ItemCard> itemListcard = List<ItemCard>();
     for (int i = 0; i < count; i++) {
       itemListcard.add(ItemCard.fromMap(itemMapList[i]));
     }
     return itemListcard;
+  }
+
+  Future<List<ItemCard>> getAllUser() async {
+    var dbClient = await this.initDb();
+    var res = await dbClient.query("login");
+
+    List<ItemCard> list =
+        res.isNotEmpty ? res.map((c) => ItemCard.fromMap(c)).toList() : null;
+
+    return list;
+  }
+
+  Future<ItemCard> getLogin(String username, String password) async {
+    var dbClient = await this.initDb();
+    var res = await dbClient.rawQuery(
+        "SELECT * FROM itemcard WHERE name = '$username' and code = '$password'");
+
+    if (res.length > 0) {
+      return new ItemCard.fromMap(res.first);
+    }
+
+    return null;
   }
 
   factory DbHelper() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sqlite/item.dart';
+import 'sqlite/itemcard.dart';
 
 class EntryForm extends StatefulWidget {
   final ItemProfile item;
@@ -10,6 +11,7 @@ class EntryForm extends StatefulWidget {
 
 class EntryFormState extends State<EntryForm> {
   ItemProfile item;
+  ItemCard itemCard;
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
   TextEditingController codeController = TextEditingController();
@@ -27,7 +29,7 @@ class EntryFormState extends State<EntryForm> {
     //rubah
     return Scaffold(
         appBar: AppBar(
-          title: item == null ? Text('Tambah Member') : Text('Ubah'),
+          title: item == null ? Text('Tambah Member') : Text('Ubah Member'),
           leading: Icon(Icons.keyboard_arrow_left),
         ),
         body: Padding(
@@ -116,10 +118,10 @@ class EntryFormState extends State<EntryForm> {
                                 codeController.text,
                                 int.parse(phoneController.text),
                                 addressController.text);
-                            // item.name = nameController.text;
-                            // item.code = codeController.text;
-                            // item.phone = int.parse(phoneController.text);
-                            // item.address = addressController.text;
+                            itemCard = ItemCard(
+                              nameController.text,
+                              codeController.text,
+                            );
                           } else {
                             // ubah data
                             item.name = nameController.text;

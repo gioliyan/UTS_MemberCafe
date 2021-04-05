@@ -81,10 +81,6 @@ class EntryFormState extends State<EntryFormCard> {
                               nameController.text,
                               codeController.text,
                             );
-                            // item.name = nameController.text;
-                            // item.code = codeController.text;
-                            // item.phone = int.parse(phoneController.text);
-                            // item.address = addressController.text;
                           } else {
                             // ubah data
                             item.name = nameController.text;
