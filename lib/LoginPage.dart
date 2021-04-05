@@ -3,8 +3,6 @@ import 'sqlite/dbhelper.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'LoginResponse.dart';
-import 'sqlite/item.dart';
-import 'main.dart';
 import 'entrycard.dart';
 
 class LoginPage extends StatefulWidget {
@@ -49,14 +47,6 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "RS POLINEMA",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-        key: scaffoldKey,
-      ),
       body: Form(
         key: formKey,
         child: ListView(
@@ -64,9 +54,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
           padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 150),
           children: <Widget>[
             Container(
+              margin: EdgeInsets.only(top: 100),
               alignment: Alignment.center,
-              child: Text("RS POLINEMA",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+              child: Text("Login Admin", style: TextStyle(fontSize: 50)),
             ),
             Container(
               margin: EdgeInsets.all(10),
@@ -101,6 +91,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
               child: Material(
                 shadowColor: Colors.lightBlueAccent.shade100,
                 child: RaisedButton(
+                  color: Colors.brown,
                   onPressed: _submit,
                   child: Text(
                     'Log In',
@@ -138,6 +129,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 
   @override
   void onLoginError(String error) {
+    AlertDialog(
+      content: new Text("Username atau Password Salah"),
+    );
     _showSnackBar(error);
     setState(() {
       _isLoading = false;
@@ -149,7 +143,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
     if (login != null) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } else {
-      _showSnackBar("Username anda salah");
+      AlertDialog(
+        content: new Text("Username atau Password Salah"),
+      );
       setState(() {
         _isLoading = false;
       });

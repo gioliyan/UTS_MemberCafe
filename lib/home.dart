@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uts_membercafe/entrycard.dart';
 import 'dart:async';
 import 'sqlite/dbhelper.dart';
 import 'entryprofile.dart';
 import 'sqlite/item.dart';
-import 'sqlite/itemcard.dart';
-import 'listcard.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -32,22 +29,21 @@ class HomeState extends State<Home> {
           child: createListView(),
         ),
         Container(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: double.infinity,
-            child: RaisedButton(
-              child: Text("Tambah Member"),
-              onPressed: () async {
-                var item = await navigateToEntryForm(context, null);
-                if (item != null) {
-                  //TODO 2 Panggil Fungsi untuk Insert ke DB
-                  int result = await dbHelper.insert(item);
-                  if (result > 0) {
-                    updateListView();
-                  }
+          alignment: Alignment.bottomRight,
+          margin: EdgeInsets.all(10),
+          width: double.infinity,
+          child: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () async {
+              var item = await navigateToEntryForm(context, null);
+              if (item != null) {
+                //TODO 2 Panggil Fungsi untuk Insert ke DB
+                int result = await dbHelper.insert(item);
+                if (result > 0) {
+                  updateListView();
                 }
-              },
-            ),
+              }
+            },
           ),
         ),
         // Container(
@@ -74,15 +70,6 @@ class HomeState extends State<Home> {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return EntryForm(item);
-    }));
-    return result;
-  }
-
-  Future<ItemCard> navigateToEntryCard(
-      BuildContext context, ItemCard itemcard) async {
-    var result = await Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) {
-      return EntryFormCard(itemcard);
     }));
     return result;
   }
