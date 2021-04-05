@@ -11,6 +11,7 @@ class LoginResponse {
   LoginRequest loginRequest = new LoginRequest();
   LoginResponse(this._callBack);
 
+  //logic login
   doLogin(String username, String password) {
     loginRequest
         .getLogin(username, password)

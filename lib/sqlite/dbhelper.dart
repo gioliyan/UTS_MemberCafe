@@ -119,25 +119,14 @@ class DbHelper {
     return itemListcard;
   }
 
-  Future<List<ItemCard>> getAllUser() async {
-    var dbClient = await this.initDb();
-    var res = await dbClient.query("login");
-
-    List<ItemCard> list =
-        res.isNotEmpty ? res.map((c) => ItemCard.fromMap(c)).toList() : null;
-
-    return list;
-  }
-
+  //query login
   Future<ItemCard> getLogin(String username, String password) async {
     var dbClient = await this.initDb();
     var res = await dbClient.rawQuery(
         "SELECT * FROM itemcard WHERE name = '$username' and code = '$password'");
-
     if (res.length > 0) {
       return new ItemCard.fromMap(res.first);
     }
-
     return null;
   }
 

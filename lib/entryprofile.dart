@@ -11,7 +11,6 @@ class EntryForm extends StatefulWidget {
 
 class EntryFormState extends State<EntryForm> {
   ItemProfile item;
-  ItemCard itemCard;
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
   TextEditingController codeController = TextEditingController();
@@ -58,7 +57,7 @@ class EntryFormState extends State<EntryForm> {
                   controller: codeController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Code Reveral',
+                    labelText: 'Code Referral',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -118,10 +117,6 @@ class EntryFormState extends State<EntryForm> {
                                 codeController.text,
                                 int.parse(phoneController.text),
                                 addressController.text);
-                            itemCard = ItemCard(
-                              nameController.text,
-                              codeController.text,
-                            );
                           } else {
                             // ubah data
                             item.name = nameController.text;
@@ -147,7 +142,7 @@ class EntryFormState extends State<EntryForm> {
                           textScaleFactor: 1.5,
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context, item);
                         },
                       ),
                     ),

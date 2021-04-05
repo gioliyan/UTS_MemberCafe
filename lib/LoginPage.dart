@@ -19,8 +19,6 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String _username, _password;
-
   LoginResponse _response;
 
   _LoginPageState() {
@@ -56,34 +54,36 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
             Container(
               margin: EdgeInsets.only(top: 100),
               alignment: Alignment.center,
-              child: Text("Login Admin", style: TextStyle(fontSize: 50)),
+              child: Text("Login Admin",
+                  style: TextStyle(fontSize: 50, color: Colors.brown)),
             ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextFormField(
-                keyboardType: TextInputType.text,
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: TextField(
                 controller: usernameController,
-                autofocus: false,
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  hintText: 'Username',
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  labelText: 'Username',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0)),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
                 ),
+                onChanged: (value) {},
               ),
             ),
-            Container(
-              margin: EdgeInsets.all(10),
-              child: TextFormField(
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: TextField(
                 controller: passwordController,
-                autofocus: false,
                 obscureText: true,
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  hintText: 'Password',
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  labelText: 'Password',
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0)),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
                 ),
+                onChanged: (value) {},
               ),
             ),
             Padding(

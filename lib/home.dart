@@ -88,10 +88,20 @@ class HomeState extends State<Home> {
               child: Icon(Icons.account_circle),
             ),
             title: Text(
-              this.itemList[index].name,
+              "Id : " +
+                  this.itemList[index].id.toString() +
+                  "\n" +
+                  this.itemList[index].name,
               style: textStyle,
             ),
-            subtitle: Text(this.itemList[index].code.toString()),
+            subtitle: Text("Alamat : " +
+                this.itemList[index].address +
+                "\n" +
+                "Code :  " +
+                this.itemList[index].code +
+                " \n" +
+                "No.TLP : " +
+                this.itemList[index].phone.toString()),
             trailing: GestureDetector(
               child: Icon(Icons.delete),
               onTap: () async {

@@ -23,7 +23,7 @@ class EntryFormState extends State<EntryFormCard> {
     //rubah
     return Scaffold(
         appBar: AppBar(
-          title: item == null ? Text('Tambah Member') : Text('Ubah'),
+          title: item == null ? Text('Register') : Text('Ubah'),
           leading: Icon(Icons.keyboard_arrow_left),
         ),
         body: Padding(
@@ -37,7 +37,7 @@ class EntryFormState extends State<EntryFormCard> {
                   controller: nameController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Nama Member',
+                    labelText: 'Username',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -50,9 +50,10 @@ class EntryFormState extends State<EntryFormCard> {
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: TextField(
                   controller: codeController,
+                  obscureText: true,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Code Reveral',
+                    labelText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
